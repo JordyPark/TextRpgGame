@@ -1,3 +1,5 @@
+using System;
+
 namespace BSsenTextRPG.Models;
 
 // 캐릭터 기본 추상 클래스 
