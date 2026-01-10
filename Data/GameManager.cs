@@ -1,6 +1,7 @@
 using BSsenTextRPG.Models;
 using BSsenTextRPG.Utils;
 using BSsenTextRPG.Models;
+using BSsenTextRPG.Systems;
 using Microsoft.VisualBasic;
 
 namespace BSsenTextRPG.Data;
@@ -126,6 +127,10 @@ public class GameManager
         // 적 캐릭터 생성 
         Enemy enemy = Enemy.CreateEnemy(Player.Level);
         enemy.DisplayInfo();
+        
+        // 전투테스트 
+        BattleSystem baaBattleSystem = new BattleSystem();
+        bool playerWin = baaBattleSystem.StartBattle(Player, enemy);
         
         ConsoleUI.PressAnyKey();
         
