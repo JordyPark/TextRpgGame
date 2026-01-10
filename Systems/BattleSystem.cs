@@ -29,7 +29,12 @@ public class BattleSystem
             Console.WriteLine($"\n============ 턴 {turn} ============");
             
             // 플레이어 턴 
-            PlayerTurn(player, enemy);
+            if (!PlayerTurn(player, enemy))
+            {
+                // 플레이어 도망 
+                Console.WriteLine("\n전투에서 도망쳤습니다....");
+                return false;       // 전투 패배 처리
+            }
             // TODO: 적 사망여부 판단 
             
             // TODO: 적 턴
@@ -37,7 +42,21 @@ public class BattleSystem
         }
         
         // 전투 결과 반환
-        return player.IsAlive;
+        // return player.IsAlive;
+        if (player.IsAlive)
+        {
+            int gainGold = enemy.GoldReward;
+            Console.WriteLine("\n전투에서 승리했습니다!");
+            Console.WriteLine($"\n{gainGold} 골드를 획득했습니다.");
+            
+            player.GainGoid(gainGold);
+            return true;
+        }
+        else
+        {
+            Console.WriteLine("\n전투에서 패배했습니다...");
+            return false;
+        }
     }
 
 
@@ -45,7 +64,7 @@ public class BattleSystem
 
     #region 플레이어 턴 
     // 플레이어 턴 (1. 공격, 2. 스킬, 3. 도망)
-    private void PlayerTurn(Player player, Enemy enemy)
+    private bool PlayerTurn(Player player, Enemy enemy)
     {
         Console.WriteLine($"\n{player.Name}의 턴입니다.");
         Console.WriteLine($"HP: {player.CurrentHp}/{player.MaxHp}  MP: {player.CurrentMp}/{player.MaxMp}");
@@ -66,7 +85,7 @@ public class BattleSystem
                     int damage = player.Attack(enemy);
                     Console.WriteLine($"{player.Name}의 공격! {enemy.Name}에게 {damage}의 피해를 입혔습니다.");
                     Console.WriteLine($"{enemy.Name} 의 남은 HP: {enemy.CurrentHp}/{enemy.MaxHp}");
-                    break;
+                    return true;
                 case "2":
                     // 스킬 사용
                     // 스킬 사용 전에 MP 체크
@@ -80,10 +99,10 @@ public class BattleSystem
                     int skillDamage = player.SkillAttack(enemy);
                     Console.WriteLine($"{player.Name}의 스킬 공격! {enemy.Name} 에게 {skillDamage}의 피해를 입혔습니다.");
                     Console.WriteLine($"{enemy.Name} 의 남은 HP: {enemy.CurrentHp}/{enemy.MaxHp}");
-                    break;
+                    return true;
                 case "3":
                     // 도망 시도
-                    break;
+                    return false;
                 default:
                     Console.WriteLine("잘못된 입력입니다. 다시 선택해주세요.");
                     break;
