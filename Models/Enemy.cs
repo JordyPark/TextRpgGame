@@ -50,6 +50,11 @@ public class Enemy : Character
         Console.WriteLine($"방어력: {Defense}");
         Console.WriteLine("=====================");
     }
+    
+    public override int Attack(Character target)
+    {
+        return target.TakeDamage(AttackPower);
+    }
         
      #endregion
 }
