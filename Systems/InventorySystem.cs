@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using BSsenTextRPG.Models;
+using BSsenTextRPG.Utils;
 
 namespace BSsenTextRPG.Systems;
 
@@ -93,6 +94,7 @@ public class InventorySystem
                     break;
                 case "2":
                     // 아이템 버리기 로직
+                    DropItem();
                     break;
                 case "0":
                     return;
@@ -117,9 +119,9 @@ public class InventorySystem
             return;
         }
         
-        Console.WriteLine("\n사용할 아이템의 번호를 입력하세요 (0: 취소)> ");
+        Console.Write("\n사용할 아이템의 번호를 입력하세요 (0: 취소)> ");
         
-        if (int.TryParse(Console.ReadLine(), out int index) && index > 0 && index < Items.Count)
+        if (int.TryParse(Console.ReadLine(), out int index) && index > 0 && index <= Items.Count)
         {
             Item item = Items[index - 1];
             
@@ -136,9 +138,43 @@ public class InventorySystem
         else if(index != 0)
         {
             Console.WriteLine("잘못된 입력입니다.");
+            ConsoleUI.PressAnyKey();
         }
         
     }
+
+    #endregion
+
+    #region 아이템 버리기
+
+    private void DropItem()
+    {
+        if(Items.Count == 0)
+        {
+            return;
+        }
+        
+        Console.Write("\n버릴 아이템의 번호를 입력하세요 (0: 취소)> ");
+
+        if (int.TryParse(Console.ReadLine(), out int index) && index > 0 && index <= Items.Count)
+        {
+            Item item = Items[index - 1];    
+            
+            Console.WriteLine($"정말 {item.Name}을(를) 버리시겠습니까? (Y/N)");
+            if (Console.ReadLine()?.ToUpper() == "Y")
+            {
+                RemoveItem(item);
+            }
+        }
+        else if (index != 0)
+        {
+            Console.WriteLine("잘못된 입력입니다.");
+            ConsoleUI.PressAnyKey();
+        }
+        
+        
+    }
+    
 
     #endregion
 }
