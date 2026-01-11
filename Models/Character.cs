@@ -63,6 +63,28 @@ public abstract class Character
         Console.WriteLine("=====================");
     }
     
+    // HP 회복 메서드
+    public int HealHp(int amount)
+    {
+        int beforeHp = CurrentHp;
+        // 회복 후 체력 계산 - 현재 HP가 최대 HP를 넘지 않도록
+        CurrentHp = Math.Min(MaxHp, CurrentHp + amount);
+        
+        // 실제로 회복된 양을 반환
+        return CurrentHp - beforeHp;
+    }
+    
+    // MP 회복 메서드
+    public int HealMp(int amount)
+    {
+        int beforeMp = CurrentMp;
+        // 회복 후 마나 계산 - 현재 MP가 최대 MP를 넘지 않도록
+        CurrentMp = Math.Min(MaxMp, CurrentMp + amount);
+        
+        // 실제로 회복된 양을 반환
+        return CurrentMp - beforeMp;
+    }
+    
 
     #endregion
 }

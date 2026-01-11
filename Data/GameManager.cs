@@ -68,6 +68,9 @@ public class GameManager
         // 인벤토리 초기화 
         InventorySystem = new InventorySystem();
         
+        // 초기 아이템 지급 
+        SetupInitialItems();
+        
         // 메인 게임 루프 
         IsRunning = true;
         while (IsRunning)
@@ -147,9 +150,24 @@ public class GameManager
         // bool playerWin = baaBattleSystem.StartBattle(Player, enemy);
         
         ConsoleUI.PressAnyKey();
-        
-
     }
+    
+    // 초기 아이템 지급 
+    private void SetupInitialItems()
+    {
+        // 기본 장비 
+        InventorySystem.AddItem(Equipment.CreateWeapon("목검")); 
+        InventorySystem.AddItem(Equipment.CreateArmor("천갑옷"));
+        
+        // 포션 지급 
+        InventorySystem.AddItem(Consumable.CreatePotion("체력포션"));
+        InventorySystem.AddItem(Consumable.CreatePotion("체력포션"));
+        InventorySystem.AddItem(Consumable.CreatePotion("마나포션"));
+
+        Console.WriteLine("\n초기 장비를 지급했습니다.");
+        ConsoleUI.PressAnyKey();
+    }
+    
     
     #endregion
 
