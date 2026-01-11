@@ -46,6 +46,9 @@ public class GameManager
     // 전투시스템 
     public BattleSystem BattleSystem { get; private set; } 
     
+    // 인벤토리 시스템 
+    public InventorySystem InventorySystem { get; private set; }
+    
     // 게임 실행 여부 
     public bool IsRunning { get; private set; } = true;
     
@@ -61,6 +64,9 @@ public class GameManager
         
         // 캐릭터 생성
         CreateCharacter();
+        
+        // 인벤토리 초기화 
+        InventorySystem = new InventorySystem();
         
         // 메인 게임 루프 
         IsRunning = true;
@@ -175,7 +181,8 @@ public class GameManager
                 ConsoleUI.PressAnyKey();
                 break;  
             case "2" :
-                // TODO: 인벤토리 기능 구현 
+                // 인벤토리 기능 구현 
+                InventorySystem.ShowInventoryMenu();
                 break;
             case "3" :
                 // TODO: 상점 기능 구현 
