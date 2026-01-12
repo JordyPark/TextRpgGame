@@ -226,7 +226,8 @@ public class GameManager
                 EnterDungeon();
                 break;
             case "5" :
-                // TODO: 휴식 기능 구현 
+                // 휴식 기능 구현
+                Rest();
                 break;
             case "6" :
                 // TODO: 저장 기능 구현 
@@ -261,6 +262,35 @@ public class GameManager
        
        Console.WriteLine("\n던전 탐험을 마치고 마을로 돌아갑니다....");
        ConsoleUI.PressAnyKey();
+    }
+    
+    // 휴식 (HP/MP 회복)
+    private void Rest()
+    {
+        // 상수(Constant) : 변경되지 않는 값
+        const int restCost = 50; // 휴식 비용
+        
+        Console.Clear();
+        Console.WriteLine("\n마을의 여관에서 휴식을 취합니다...");
+        Console.WriteLine($"\n휴식 비용: {restCost} 골드");
+
+        if (Player.Gold < restCost)
+        {
+            Console.WriteLine("\n골드가 부족합니다..ㅠ_ㅠ");
+            ConsoleUI.PressAnyKey();
+            return;
+        }
+        
+        Console.Write("\n휴식을 취하시겠습니까? (Y/N): ");
+        
+        if (Console.ReadLine().ToUpper() == "Y")
+        {
+            Player.SpendGold(restCost);
+            Player.HealHp(Player.MaxHp);
+            Player.HealMp(Player.MaxMp);
+            Console.WriteLine("\n휴식을 취했습니다. HP와 MP가 모두 회복되었습니다.");
+            ConsoleUI.PressAnyKey();
+        }
     }
 
     #endregion
