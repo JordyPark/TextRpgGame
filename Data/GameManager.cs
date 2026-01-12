@@ -230,7 +230,8 @@ public class GameManager
                 Rest();
                 break;
             case "6" :
-                // TODO: 저장 기능 구현 
+                // 저장 기능 구현 
+                SaveGame();
                 break;
             case "0" :
                 IsRunning = false;
@@ -291,6 +292,28 @@ public class GameManager
             Console.WriteLine("\n휴식을 취했습니다. HP와 MP가 모두 회복되었습니다.");
             ConsoleUI.PressAnyKey();
         }
+    }
+
+    #endregion
+
+    #region 저장 기능
+
+    public void SaveGame()
+    {
+        if(Player == null || InventorySystem == null)
+        {
+            Console.WriteLine("\n저장할 게임 데이터가 없습니다.");
+            ConsoleUI.PressAnyKey();
+            return;
+        }
+
+        if (SaveLoadSystem.SaveGame(Player, InventorySystem))
+        {
+            Console.WriteLine("\n정상적으로 게임이 저장 되었습니다.");
+            ConsoleUI.PressAnyKey();
+            
+        }
+        
     }
 
     #endregion
