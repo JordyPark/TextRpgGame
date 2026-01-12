@@ -77,8 +77,8 @@ public class ShopSystem
                     BuyItem(player, inventory);
                     break;
                 case "2":
-                    // TODO : 아이템 판매
-                    // ShopSellMenu(player, inventory);
+                    // 아이템 판매
+                    SellItem(player, inventory);
                     break;
                 case "0":
                     // 상점 나가기
@@ -194,6 +194,60 @@ public class ShopSystem
 
         return null;
     }
+
+    #endregion
+
+    #region 아이템 판매
+
+    private void SellItem(Player player, InventorySystem inventory)
+    {
+        if (inventory.Count == 0)
+        {
+            Console.WriteLine("\n판매할 아이템이 없습니다.");
+            return;
+        }
+        
+        inventory.DisplayInventory();
+        
+        Console.Write("\n판매할 아이템 번호를 입력하세요 (0: 취소)> ");
+
+        if (int.TryParse(Console.ReadLine(), out int index) && index > 0 && index <= inventory.Count)
+        {
+            // 인벤토리에서 아이템 추출 
+            Item? item = inventory.GetItem(index - 1);
+
+            if (item != null)
+            {
+                // 판매 가격 할인 (구매 가격에 50%)
+                int sellPrice = (int)(item.Price * 0.5f);
+                
+                Console.WriteLine($"{item.Name}을 {sellPrice} 골드에 판매하시겠습니까? (Y/N) : ");
+                
+                if (Console.ReadLine()?.ToUpper() == "Y")
+                {
+                    // 아이템 인벤토리에서 제거 및 골드 증가  
+                    inventory.RemoveItem(item);
+                    player.GainGoid(sellPrice);
+                    
+                    // 장착 해제 
+                    if (item is Equipment equipment)
+                    {
+                        player.UnEquipItem(equipment.Slot);
+                    }
+                    
+                    Console.WriteLine($"{item.Name}을(를) 판매했습니다. 골드 +{sellPrice}");
+                    ConsoleUI.PressAnyKey();
+                }
+                else
+                {
+                    Console.WriteLine("판매를 취소했습니다.");
+                }
+
+            }
+        }
+        
+    }
+    
 
     #endregion
     

@@ -45,6 +45,17 @@ public class InventorySystem
         return false;
     }
     
+    // 인덱스 값으로 아이템 반환 
+    public Item? GetItem(int index)
+    {
+        if(index >= 0 && index < Items.Count)
+        {
+            return Items[index];
+        }
+        
+        return null;
+    }
+    
     #endregion
 
     #region  인벤토리 표시 
