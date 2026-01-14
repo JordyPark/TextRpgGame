@@ -328,8 +328,10 @@ public class GameManager
         Player = SaveLoadSystem.LoadPlayer(savedData.Player);
         
         // 2. 인벤토리 데이터 복원
+        InventorySystem = SaveLoadSystem.LoadInventorySystem(savedData.Inventory, Player);
         
         // 3. 장착 아이템 복원
+        SaveLoadSystem.LoadEquippedItems(Player, savedData.Player, InventorySystem);
         
         Console.WriteLine("\n게임 데이터를 불러왔습니다.");
         ConsoleUI.PressAnyKey();
